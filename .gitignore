@@ -1,0 +1,14 @@
+# Never commit — contains API tokens, passwords, and session-specific curl permissions
+settings.local.json
+*.local.json
+
+# Claude session data
+sessions/
+projects/
+shell-snapshots/
+
+# Plugin cache (large, not config)
+plugins/cache/
+
+# OS
+.DS_Store
