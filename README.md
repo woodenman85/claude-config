@@ -2,18 +2,49 @@
 
 > One command. Five minutes. Claude configured specifically for insurance agents.
 
-**👉 [Start here → Setup Guide](onboarding/SETUP_GUIDE.md)**
+---
+
+## 🍎 Mac setup
+
+**[→ Mac Setup Guide](onboarding/SETUP_GUIDE.md)**
+
+```bash
+# Install everything
+curl -fsSL https://raw.githubusercontent.com/woodenman85/claude-config/main/onboarding/setup.sh | bash
+
+# Verify it's working
+curl -fsSL https://raw.githubusercontent.com/woodenman85/claude-config/main/onboarding/verify.sh | bash
+```
+
+---
+
+## 🪟 Windows setup
+
+**[→ Windows Setup Guide](onboarding/SETUP_GUIDE_WINDOWS.md)**
+
+Open **PowerShell** (not Command Prompt), then run:
+
+```powershell
+# One-time: allow scripts to run
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Install everything
+irm https://raw.githubusercontent.com/woodenman85/claude-config/main/onboarding/setup.ps1 | iex
+
+# Verify it's working
+irm https://raw.githubusercontent.com/woodenman85/claude-config/main/onboarding/verify.ps1 | iex
+```
 
 ---
 
 ## What you get
 
-After running the setup, Claude can:
+After setup, Claude can:
 
 | Tool | What it does |
 |------|-------------|
-| **GHL CRM** | Find contacts, manage pipeline, add notes, trigger workflows |
 | **Daily Briefing** | Pull your leads, calendar, and emails every morning |
+| **GHL CRM** | Find contacts, manage pipeline, add notes, trigger workflows |
 | **Lead Nurture** | Draft follow-up sequences for life, mortgage, final expense |
 | **SMS Drafting** | Write compliant texts to leads and clients |
 | **Compliance Check** | Review marketing content before you post or send |
@@ -25,42 +56,17 @@ After running the setup, Claude can:
 
 ---
 
-## Setup in 5 minutes
-
-1. Install Claude desktop app at **[claude.ai/download](https://claude.ai/download)** (Pro plan, $20/mo)
-2. Install Node.js at **[nodejs.org](https://nodejs.org)** (free, required for tools)
-3. Collect 3 things from GoHighLevel — the guide shows you exactly where
-4. Run one command in Terminal
-5. Restart Claude — done
-
-**[Full step-by-step guide →](onboarding/SETUP_GUIDE.md)**
-
----
-
 ## All documents
 
-| Document | What it's for |
-|----------|--------------|
-| [SETUP_GUIDE.md](onboarding/SETUP_GUIDE.md) | Full step-by-step setup for non-technical users |
-| [QUICK_REFERENCE.md](onboarding/QUICK_REFERENCE.md) | Daily cheat sheet — copy-paste prompts for every situation |
-| [TROUBLESHOOTING.md](onboarding/TROUBLESHOOTING.md) | Fix common issues after setup |
-| [verify.sh](onboarding/verify.sh) | Run this to check everything is working |
-
----
-
-## Run one command
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/woodenman85/claude-config/main/onboarding/setup.sh | bash
-```
-
----
-
-## Already set up? Verify it's working
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/woodenman85/claude-config/main/onboarding/verify.sh | bash
-```
+| Document | Platform | What it's for |
+|----------|----------|--------------|
+| [SETUP_GUIDE.md](onboarding/SETUP_GUIDE.md) | 🍎 Mac | Full step-by-step setup |
+| [SETUP_GUIDE_WINDOWS.md](onboarding/SETUP_GUIDE_WINDOWS.md) | 🪟 Windows | Full step-by-step setup |
+| [QUICK_REFERENCE.md](onboarding/QUICK_REFERENCE.md) | Both | Daily cheat sheet — copy-paste prompts |
+| [TROUBLESHOOTING.md](onboarding/TROUBLESHOOTING.md) | 🍎 Mac | Fix common issues |
+| [TROUBLESHOOTING_WINDOWS.md](onboarding/TROUBLESHOOTING_WINDOWS.md) | 🪟 Windows | Fix common issues |
+| [verify.sh](onboarding/verify.sh) | 🍎 Mac | Check everything is working |
+| [verify.ps1](onboarding/verify.ps1) | 🪟 Windows | Check everything is working |
 
 ---
 
