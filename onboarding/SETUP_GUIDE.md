@@ -1,18 +1,35 @@
 # Step-by-Step Setup Guide
 ### Claude Code for Wood Agency Network
 
-Don't worry if you've never done anything like this before. Follow each step exactly and you'll be done in about 10 minutes.
+Don't worry if you've never done anything like this before. Follow each step exactly and you'll be done in about 15 minutes. Every step has a ✅ checkpoint so you know you're on track.
+
+---
+
+## What you'll end up with
+
+After setup, Claude will be able to:
+- 🏗️ **Build and redesign your website** — describe it, Claude builds it
+- 📋 **Work inside your GoHighLevel CRM** — contacts, pipelines, workflows, automations
+- 🎨 **Create marketing materials in Canva** — social posts, flyers, presentations
+- 📧 **Draft and organize emails in Gmail** — follow-ups, outreach, client emails
+- 📅 **Manage your Google Calendar** — book appointments, set reminders, check availability
+- 🖥️ **Generate professional website components** — hero sections, forms, testimonials
+
+---
+
+# PHASE 1 — Run the installer
+*Gets the core tools set up automatically*
 
 ---
 
 ## Step 1 — Install Claude Code
 
 1. Go to **https://claude.ai/download** on your Mac
-2. Download and install the app (it looks like a normal Mac app install)
-3. Open Claude and sign in — you need a **Claude Pro plan** ($20/mo)
-   - If you don't have one: click your name → Upgrade to Pro
+2. Download and install the app (drag it to Applications like any Mac app)
+3. Open Claude and sign in
+4. You need a **Claude Pro plan** ($20/mo) — if you don't have one, click your name → Upgrade to Pro
 
-✅ **You're done with Step 1 when:** Claude opens and you can chat with it.
+✅ **Done when:** Claude opens and you can type to it.
 
 ---
 
@@ -21,138 +38,202 @@ Don't worry if you've never done anything like this before. Follow each step exa
 This gives Claude permission to work inside your GoHighLevel account.
 
 1. Log into **GoHighLevel**
-2. Click **Settings** (bottom left gear icon)
+2. Click **Settings** (gear icon, bottom left)
 3. Click **Integrations**
 4. Click **Private Integrations**
-5. Click **+ Create New Integration**
+5. Click **+ Create New Integration** (or **+ New**)
 6. Name it: `Claude MCP`
-7. **Enable ALL scopes** (turn everything on — this lets Claude do the most for you)
-8. Click **Save** or **Create**
-9. Copy the token that appears — it starts with `pit-` and looks like:
-   `pit-f7f643ce-f370-485a-87a3-c30edafa0a17`
+7. **Turn on ALL scopes** — scroll through and enable everything
+8. Click **Save**
+9. **Copy the token** — it starts with `pit-` and looks like:
+   `pit-a1b2c3d4-e5f6-7890-abcd-ef1234567890`
 
-> ⚠️ **Save this somewhere safe** — you'll need it in Step 5. Don't share it publicly.
+> ⚠️ Keep this safe — don't share it publicly. It's like a password for your GHL account.
 
-✅ **You're done with Step 2 when:** You have a `pit-...` token copied.
+✅ **Done when:** You have a `pit-...` token copied somewhere safe.
 
 ---
 
 ## Step 3 — Get your GHL Location ID
 
-1. Still in GoHighLevel, go to **Settings**
-2. Click **Business Profile** (sometimes called Company Info)
-3. Look for **Location ID** — it's a string of letters and numbers like:
-   `MpDMPLkOAjXBtmXs5G6B`
+1. Still in GoHighLevel → **Settings**
+2. Click **Business Profile** (sometimes called Company or Location Info)
+3. Find **Location ID** — it's a string like: `MpDMPLkOAjXBtmXs5G6B`
 4. Copy it
 
-✅ **You're done with Step 3 when:** You have your Location ID copied.
+✅ **Done when:** You have your Location ID copied.
 
 ---
 
 ## Step 4 — Get your free Magic API key
 
-This is what makes Claude build beautiful, professional-looking websites (not ugly AI output).
+This makes Claude generate beautiful, professional website designs instead of plain-looking ones.
 
 1. Go to **https://21st.dev**
-2. Click **Sign Up** — it's free
-3. Once logged in, go to your **Dashboard**
-4. Find your **API Key** and copy it
+2. Click **Sign Up** — completely free
+3. Once logged in, find your **API Key** in the dashboard
+4. Copy it
 
-> You can skip this for now and add it later, but your website designs will look much better with it.
+> You can skip this for now and add it later — just press Enter when the installer asks.
 
-✅ **You're done with Step 4 when:** You have an API key from 21st.dev (or you're skipping for now).
+✅ **Done when:** You have an API key from 21st.dev (or you're skipping for now).
 
 ---
 
-## Step 5 — Run the setup
+## Step 5 — Run the installer
 
-Now you'll run a single command that sets everything up automatically.
-
-### How to open Terminal on a Mac:
-1. Press **Cmd + Space** (the Command key and the Space bar at the same time)
+### Open Terminal:
+1. Press **Cmd + Space** at the same time
 2. Type `Terminal`
 3. Press **Enter**
-4. A black or white window opens — that's Terminal
+4. A window opens with a blinking cursor — that's Terminal. Don't be intimidated!
 
-### Run this command:
-Copy this entire line, paste it into Terminal, and press **Enter**:
+### Paste and run this command:
+Click inside the Terminal window, paste this entire line, then press **Enter**:
 
 ```
 curl -fsSL https://raw.githubusercontent.com/woodenman85/claude-config/main/onboarding/setup.sh | bash
 ```
 
-> **How to paste in Terminal:** Cmd + V (same as everywhere else on a Mac)
+> **To paste in Terminal:** Cmd + V (same as everywhere else on your Mac)
 
-### The script will ask you for:
-- Your name
-- Your GHL `pit-...` token (from Step 2)
-- Your GHL Location ID (from Step 3)
-- Your 21st.dev API key (from Step 4) — press Enter to skip if you don't have it yet
+### The installer will ask you for:
+| Prompt | What to type |
+|--------|-------------|
+| Your name | Your first and last name |
+| GHL token | Paste your `pit-...` token from Step 2 |
+| GHL Location ID | Paste your Location ID from Step 3 |
+| 21st.dev API key | Paste your key from Step 4 (or press Enter to skip) |
+| Set git name/email? | Type `y` then enter your email if you want, or `n` to skip |
 
-Just type or paste each one and press **Enter**.
-
-✅ **You're done with Step 5 when:** You see "Setup complete!" in green.
+✅ **Done when:** You see `Setup complete!` in green text.
 
 ---
 
 ## Step 6 — Restart Claude
 
-1. Quit Claude completely: **Cmd + Q**
-2. Open Claude again
-3. Start a new conversation
+1. Press **Cmd + Q** to quit Claude completely
+2. Open Claude again from your Applications folder
+3. Start a **new session** (new conversation)
 
-✅ **You're done!** Claude is now set up for you.
+✅ **Phase 1 complete!** GHL, website design tools, and Context7 are all live.
 
 ---
 
-## Try these to get started
+# PHASE 2 — Connect your apps
+*Takes 3 minutes — no tokens needed, just click to authorize*
 
-Copy and paste any of these into Claude:
+Gmail, Google Calendar, and Canva connect through the Claude app using your existing accounts. Claude never sees your password — it's the same "Sign in with Google" you've used everywhere.
 
-**For your website:**
-> "Look at my current website and tell me what you'd improve to get more insurance leads."
+---
 
-> "Build me a hero section for my life insurance website. Make it professional, trustworthy, and include a button to book a free consultation."
+## Step 7 — Connect Gmail
 
-> "Redesign my homepage. I sell life insurance, mortgage protection, and final expense insurance. Mobile-first, clean, modern."
+1. In Claude, click the **integrations or plugins icon** (looks like puzzle pieces or a grid, usually top right or in settings)
+2. Find **Gmail** in the list
+3. Click **Connect**
+4. A Google sign-in window opens — sign in with your Gmail account
+5. Click **Allow** when Google asks for permission
 
-**For GoHighLevel:**
-> "Audit my GHL account and tell me what you see — pipelines, workflows, contacts."
+✅ **Done when:** Gmail shows as connected in Claude.
 
-> "Help me set up an automated follow-up sequence for new leads in GHL."
+**Test it:** Type `"Search my Gmail inbox for any leads from this week"` — Claude should return real results.
 
-> "Show me all my current workflows and tell me which ones might need improvement."
+---
+
+## Step 8 — Connect Google Calendar
+
+1. Same integrations area in Claude
+2. Find **Google Calendar**
+3. Click **Connect** → sign in with your Google account → Allow
+
+✅ **Done when:** Google Calendar shows as connected.
+
+**Test it:** Type `"What's on my calendar this week?"` — Claude should show your real events.
+
+---
+
+## Step 9 — Connect Canva
+
+1. Same integrations area in Claude
+2. Find **Canva**
+3. Click **Connect** → sign in with your Canva account → Allow
+4. If you don't have a Canva account: go to **canva.com** → Sign up free → come back and connect
+
+✅ **Done when:** Canva shows as connected.
+
+**Test it:** Type `"Create a simple Instagram post about life insurance"` — Claude should generate a real Canva design.
+
+---
+
+# You're fully set up! 🎉
+
+Here's what Claude can now do for you. Copy and paste any of these to try it out:
+
+---
+
+## 🏗️ Website
+> *"Look at woodagencylife.com and tell me what you'd change to get more leads."*
+
+> *"Build me a hero section for my life insurance website. Professional, trust-building, mobile-first, with a 'Book a Free Call' button."*
+
+> *"Create a testimonials section for my insurance website — clean and modern."*
+
+---
+
+## 📋 GoHighLevel
+> *"Audit my GHL account — show me my pipelines, how many contacts I have, and what workflows are running."*
+
+> *"Help me build an automated follow-up sequence for new leads."*
+
+> *"Show me all contacts added in the last 7 days."*
+
+---
+
+## 📧 Gmail
+> *"Draft a follow-up email to a lead who filled out my life insurance form but hasn't booked a call yet."*
+
+> *"Search my inbox for emails I haven't replied to from this week."*
+
+> *"Write a referral request email I can send to happy clients."*
+
+---
+
+## 📅 Google Calendar
+> *"What does my week look like?"*
+
+> *"Schedule a 30-minute consultation call with [name] for Thursday at 2pm."*
+
+> *"Block every Monday morning for lead follow-up calls."*
+
+---
+
+## 🎨 Canva
+> *"Create an Instagram post about the importance of life insurance for young families."*
+
+> *"Design a flyer for a free life insurance consultation."*
+
+> *"Make a Facebook post about mortgage protection with a CTA to book a call."*
 
 ---
 
 ## Something didn't work?
 
-**"Command not found" error in Terminal**
-→ Make sure you copied the entire command including the `curl` at the beginning.
+**"Command not found" in Terminal**
+→ Make sure you copied the whole command starting with `curl`
 
-**"Claude desktop app not found" error**
-→ Make sure Claude is installed from claude.ai/download before running setup.
+**"Claude desktop app not found"**
+→ Install Claude first from claude.ai/download, then re-run the installer
 
-**The script didn't ask for my Magic API key**
-→ That's fine — it's optional. You can add it later.
+**Can't find the integrations panel in Claude**
+→ Look for a small icon in the top-right of the Claude window, or check Settings → Integrations
+
+**Gmail/Calendar/Canva won't connect**
+→ Make sure you're signed into that account in your browser first, then try again
 
 **Anything else**
-→ Contact Ben Wood — he can walk you through it.
+→ Contact Ben Wood — he can walk you through it
 
 ---
 
-## What got installed
-
-After setup, here's what Claude now knows and can do:
-
-| What | Does |
-|------|------|
-| Your identity | Claude knows you work in the Wood Agency network and what products you sell |
-| **GHL connection** | Claude can read and edit your GoHighLevel directly — no copy-pasting |
-| **Design tools** | Claude can generate beautiful website sections using professional UI patterns |
-| **Framework docs** | Claude always uses current, correct code — no broken or outdated stuff |
-| **GHL rules** | Claude will never delete your workflows — it builds new ones alongside instead |
-
----
-
-*Setup created by Ben Wood · github.com/woodenman85/claude-config*
+*Setup built by Ben Wood · github.com/woodenman85/claude-config*

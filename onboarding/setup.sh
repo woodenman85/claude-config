@@ -186,6 +186,80 @@ description: Build beautiful, professional websites. Use when asked to create, r
 - "Create a sticky nav bar for an insurance agency website"
 EOF
 
+mkdir -p ~/.claude/skills/gmail
+cat > ~/.claude/skills/gmail/SKILL.md << 'EOF'
+---
+name: gmail
+description: Read, draft, and organize emails in Gmail. Use when asked to write follow-up emails, search inbox, draft outreach, or manage email threads for leads and clients.
+---
+
+# Gmail Skill
+
+Use mcp__*__* Gmail tools directly.
+
+## Insurance agency use cases
+- Draft follow-up emails for leads who haven't booked yet
+- Write thank-you emails after appointments
+- Search inbox for unanswered lead emails
+- Draft referral request emails to happy clients
+- Write cold outreach for mortgage protection or final expense
+
+## Rules
+- Always draft first — never send without showing the user
+- Keep emails short, warm, trust-building
+- Include one clear next step (book a call, reply with questions)
+- Never promise specific rates or coverage amounts
+EOF
+
+mkdir -p ~/.claude/skills/calendar
+cat > ~/.claude/skills/calendar/SKILL.md << 'EOF'
+---
+name: calendar
+description: Manage Google Calendar — schedule appointments, check availability, set reminders for client calls and follow-ups.
+---
+
+# Calendar Skill
+
+Use mcp__*__* Calendar tools directly.
+
+## Insurance agency use cases
+- Schedule client consultation calls
+- Block prospecting time
+- Add follow-up reminders for leads
+- Check weekly schedule before booking
+
+## Rules
+- Always confirm date/time before creating events
+- Add client name + product to event title (e.g. "Jane Smith — Life Insurance Consult")
+- Set reminders 24hr and 1hr before client calls
+- Never delete events without confirming with user
+EOF
+
+mkdir -p ~/.claude/skills/canva
+cat > ~/.claude/skills/canva/SKILL.md << 'EOF'
+---
+name: canva
+description: Create marketing materials in Canva — social posts, flyers, lead magnets, presentations. Use when asked to design anything for marketing or client outreach.
+---
+
+# Canva Skill
+
+Use mcp__*__* Canva tools directly.
+
+## Insurance agency use cases
+- Social posts (Instagram, Facebook) about insurance topics
+- Flyers for free consultation offers
+- Lead magnets (e.g. "5 Things to Know Before Buying Life Insurance")
+- Client presentation slides for IUL or annuity meetings
+- Referral cards, business cards, email headers
+
+## Rules
+- Check brand kit first for consistent colors/fonts
+- Always show design before finalizing
+- Keep insurance marketing compliant — no guaranteed returns, no misleading claims
+- Square format for Instagram, landscape for Facebook/email
+EOF
+
 mkdir -p ~/.claude/skills/website
 cat > ~/.claude/skills/website/SKILL.md << 'EOF'
 ---
@@ -233,11 +307,12 @@ echo -e "${GREEN}   Setup complete!${NC}"
 echo "=============================================="
 echo ""
 echo "Next steps:"
-echo "  1. Restart the Claude desktop app"
-echo "  2. Try these to get started:"
-echo "     • 'Audit my GHL account and tell me what you see'"
-echo "     • 'Help me redesign my homepage to look more professional'"
-echo "     • 'Build a hero section for my insurance website'"
+echo "  1. Restart the Claude desktop app (Cmd+Q then reopen)"
+echo "  2. Connect Gmail, Google Calendar, and Canva inside Claude:"
+echo "     → Look for the integrations/plugins icon in Claude"
+echo "     → Connect each app with your own account (takes ~1 min each)"
+echo "  3. Read the full guide for prompts to get started:"
+echo "     https://github.com/woodenman85/claude-config/blob/main/onboarding/SETUP_GUIDE.md"
 echo ""
 
 if [ -z "$MAGIC_KEY" ]; then
