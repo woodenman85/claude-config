@@ -36,7 +36,29 @@ echo -n "   Paste it here (or press Enter to skip for now): "
 read MAGIC_KEY
 echo ""
 
-# ── Step 2: Check Claude is installed ────────────────────
+# ── Step 2: Check Node.js is installed ───────────────────
+if ! command -v node &> /dev/null; then
+  echo -e "${RED}Node.js is not installed.${NC}"
+  echo ""
+  echo "Node.js is required for the MCP tools (GHL, Magic, Context7)."
+  echo "Install it now:"
+  echo "  1. Go to https://nodejs.org"
+  echo "  2. Download and install the LTS version"
+  echo "  3. Reopen Terminal and run this script again"
+  echo ""
+  exit 1
+fi
+
+NODE_VERSION=$(node -v | cut -d'v' -f2 | cut -d'.' -f1)
+if [ "$NODE_VERSION" -lt 18 ]; then
+  echo -e "${RED}Node.js version is too old (found v$NODE_VERSION, need 18+).${NC}"
+  echo "Download the latest LTS from https://nodejs.org and try again."
+  exit 1
+fi
+
+echo -e "${GREEN}✓ Node.js $(node -v) found${NC}"
+
+# ── Step 3: Check Claude is installed ────────────────────
 DESKTOP_CONFIG="$HOME/Library/Application Support/Claude/claude_desktop_config.json"
 
 if [ ! -f "$DESKTOP_CONFIG" ]; then
@@ -46,7 +68,7 @@ if [ ! -f "$DESKTOP_CONFIG" ]; then
   exit 1
 fi
 
-# ── Step 3: Create ~/.claude/CLAUDE.md ───────────────────
+# ── Step 4: Create ~/.claude/CLAUDE.md ───────────────────
 echo -e "${YELLOW}Setting up your Claude config...${NC}"
 mkdir -p ~/.claude
 
@@ -79,7 +101,7 @@ EOF
 
 echo -e "${GREEN}✓ ~/.claude/CLAUDE.md created${NC}"
 
-# ── Step 4: Install MCPs ──────────────────────────────────
+# ── Step 5: Install MCPs ──────────────────────────────────
 echo -e "${YELLOW}Installing MCP servers...${NC}"
 
 python3 - << PYEOF
@@ -126,7 +148,7 @@ PYEOF
 
 echo -e "${GREEN}✓ MCPs added to Claude desktop config${NC}"
 
-# ── Step 5: Install skills ────────────────────────────────
+# ── Step 6: Install skills ────────────────────────────────
 echo -e "${YELLOW}Installing skills...${NC}"
 
 mkdir -p ~/.claude/skills/ghl
@@ -286,9 +308,204 @@ curl --ftp-pasv -T <file> ftp://<host>/domains/<domain>/public_html/<file> \
 - Never edit directly on the server
 EOF
 
-echo -e "${GREEN}✓ Skills installed (ghl, design, website)${NC}"
+mkdir -p ~/.claude/skills/daily-briefing
+cat > ~/.claude/skills/daily-briefing/SKILL.md << 'EOF'
+---
+name: daily-briefing
+description: Start the day with a full business briefing. Pulls GHL pipeline, calendar, Gmail, and suggests priority actions. Use when user says "good morning", "start my day", "what should I focus on", or "daily briefing".
+---
 
-# ── Step 6: Git identity ──────────────────────────────────
+# Daily Briefing Skill
+
+Run this every morning. Pulls live data from all connected tools and gives a prioritized action plan.
+
+## What to pull (run all in parallel)
+
+1. **GHL** — search_contacts (added last 7 days), search_opportunities (open deals by stage)
+2. **Calendar** — list_events (today + tomorrow)
+3. **Gmail** — search_threads (unread, last 48hrs, label:lead OR insurance)
+
+## Output format
+
+```
+🌅 Good morning [name] — here's your day
+
+📋 PIPELINE SNAPSHOT
+- X new leads this week
+- X open opportunities
+- Who's been sitting too long without contact (flag anyone >3 days no touch)
+
+📅 TODAY'S CALENDAR
+- [list events with times]
+- Any conflicts or back-to-backs to flag
+
+📧 INBOX NEEDS ATTENTION
+- [unread threads that look like leads or need reply]
+
+🎯 TOP 3 PRIORITIES FOR TODAY
+1. [Most urgent action]
+2. [Second priority]
+3. [Third priority]
+
+💡 ONE THING
+[One specific thing they should do in the next 30 minutes]
+```
+
+## Rules
+- Keep it tight — no fluff, no filler
+- Prioritize revenue actions (leads, appointments, follow-ups) above admin
+- Flag anything that's falling through the cracks
+- Always end with ONE specific action to do right now
+EOF
+
+mkdir -p ~/.claude/skills/lead-nurture
+cat > ~/.claude/skills/lead-nurture/SKILL.md << 'EOF'
+---
+name: lead-nurture
+description: Build and execute lead follow-up sequences for insurance prospects. Use when asked to follow up with leads, build nurture sequences, or figure out what to say to a prospect.
+---
+
+# Lead Nurture Skill
+
+## Lead follow-up philosophy
+- Speed to lead: first contact within 5 minutes if possible
+- 7-12 touches before giving up on a lead
+- Mix of: call → text → email → voicemail → social
+- Always lead with value, not the sell
+
+## Follow-up sequences by product
+
+### Life Insurance
+- Day 0: Call + text ("Hey [name], saw you were looking into life insurance — I have some quick questions that'll help me find the best fit for you. When's a good time to connect?")
+- Day 1: Email with "3 things most people don't know about life insurance"
+- Day 3: Call attempt 2 + voicemail
+- Day 5: Text check-in
+- Day 7: Email with real client story (anonymized)
+- Day 10: Break-up email ("I don't want to bother you — just want to make sure you got what you needed...")
+
+### Mortgage Protection
+- Lead usually has urgency (just bought a home) — move fast
+- Day 0: Call immediately + text
+- Day 1: Email explaining mortgage protection in plain English
+- Day 3: Follow-up call + "Did you know your lender doesn't require this but banks wish you knew about it?"
+
+### Final Expense
+- Warmer, empathetic tone — this audience has end-of-life on their mind
+- Never be pushy — be helpful and educational
+- Focus on peace of mind for family
+
+## What to do with a GHL lead
+1. search_contacts to find the lead
+2. Check their custom fields for product interest and source
+3. Look at their last activity/notes
+4. Draft appropriate follow-up based on where they are in the sequence
+
+## Prompts that work well
+- "Help me follow up with a lead who filled out my life insurance form 3 days ago and hasn't responded"
+- "Write a 5-touch email sequence for mortgage protection leads"
+- "Draft a text to send a final expense lead who went cold"
+- "What should I say on a voicemail for a life insurance prospect?"
+EOF
+
+mkdir -p ~/.claude/skills/compliance
+cat > ~/.claude/skills/compliance/SKILL.md << 'EOF'
+---
+name: compliance
+description: Review insurance marketing content for compliance issues before publishing or sending. Use when asked to check emails, social posts, website copy, or any client-facing content.
+---
+
+# Insurance Compliance Skill
+
+## What to check for
+
+### Hard stops (never allowed)
+- ❌ Guaranteed returns or interest rates (e.g. "earn 10% guaranteed")
+- ❌ Guaranteed approval without qualification
+- ❌ Specific benefit amounts without disclosure
+- ❌ Comparing competitors by name without substantiation
+- ❌ Using terms like "free money" or "government program" misleadingly
+- ❌ Implying Social Security replacement without proper context
+- ❌ Any claim that could be construed as misleading about policy costs
+
+### Yellow flags (needs disclosure or rewording)
+- ⚠️ "Tax-free" — needs context (loans, not withdrawals, may be tax-free)
+- ⚠️ Specific rate illustrations — must note "not guaranteed" if not whole life
+- ⚠️ "Infinite banking" claims — ensure no misleading banking comparisons
+- ⚠️ Testimonials — ensure they reflect typical results or include disclaimers
+- ⚠️ "Retire early" or income replacement claims — needs proper qualification
+
+### Best practices
+- ✅ Lead with education, not promises
+- ✅ "May", "can", "could" instead of "will" for benefits
+- ✅ Include "results may vary" near any performance claims
+- ✅ State licensing disclosure when required by state law
+
+## How to use
+When reviewing content:
+1. Read through for hard stops first
+2. Flag yellow items with suggested rewording
+3. Provide a compliant version of the content
+4. Note which state(s) the content is for (rules vary)
+EOF
+
+mkdir -p ~/.claude/skills/sms
+cat > ~/.claude/skills/sms/SKILL.md << 'EOF'
+---
+name: sms
+description: Draft text messages to leads and clients — follow-ups, appointment reminders, check-ins. Use when asked to write a text, SMS, or quick message to a prospect or client.
+---
+
+# SMS Skill
+
+## The rules of insurance texting
+- Keep it under 160 characters when possible
+- Sound human — not like a bot
+- One clear ask per text
+- Never include policy details or rates in a text
+- Always identify yourself by name on first text
+- Check state TCPA rules — get opt-in consent before texting
+
+## Text templates by situation
+
+### First contact after form fill
+```
+Hey [name], this is [agent] with [agency]. Saw you had questions about [product] — happy to help! When's a good time to connect? 📞
+```
+
+### Follow-up after no response (Day 3)
+```
+Hey [name] — [agent] again. Just want to make sure I didn't miss you. Still happy to answer any questions about [product]. 🙂
+```
+
+### Appointment reminder (24hr before)
+```
+Hey [name]! Quick reminder — we're chatting tomorrow at [time] about [product]. Looking forward to it! Reply if anything changes.
+```
+
+### After appointment (same day)
+```
+Great talking with you today [name]! I'll get that info over to you shortly. Any questions, just text or call me anytime.
+```
+
+### Re-engagement (cold lead, 2+ weeks)
+```
+Hey [name] — [agent] here. Wanted to check in and see if you ever got the [product] info you were looking for. No pressure, just here if you need anything!
+```
+
+### Referral ask
+```
+Hey [name]! Hope everything's great. If you know anyone who could use [product], I'd love to help them too. I take good care of referrals! 🙏
+```
+
+## GHL integration
+- Use send_sms tool to send directly from GHL
+- Always check contact record first for opt-in status
+- Log all texts as notes in GHL contact record
+EOF
+
+echo -e "${GREEN}✓ Skills installed (ghl, design, website, daily-briefing, lead-nurture, compliance, sms)${NC}"
+
+# ── Step 7: Git identity ──────────────────────────────────
 echo ""
 echo -n "Set your git name and email? (y/n): "
 read SET_GIT
