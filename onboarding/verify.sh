@@ -98,7 +98,7 @@ if [ -f "$HOME/.claude/CLAUDE.md" ]; then
   else
     check "  GHL token present" "warn" "no pit- token found — run setup.sh to add it"
   fi
-  if grep -q "Location ID" "$HOME/.claude/CLAUDE.md" 2>/dev/null; then
+  if grep -q "Location ID\|GHL_LOCATION\|MpDMPLk" "$HOME/.claude/CLAUDE.md" 2>/dev/null; then
     check "  GHL Location ID present" "pass"
   else
     check "  GHL Location ID present" "warn" "run setup.sh to add it"
@@ -117,7 +117,7 @@ for skill in ghl design website gmail calendar canva daily-briefing lead-nurture
   else
     check "  $skill skill" "fail" "run setup.sh to install it"
   fi
-fi
+done
 
 echo ""
 
