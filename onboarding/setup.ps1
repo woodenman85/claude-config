@@ -31,6 +31,10 @@ Write-Host "4. Your 21st.dev Magic API key (free at https://21st.dev)"
 Write-Host "   Sign up, go to dashboard, copy your API key."
 $MAGIC_KEY      = Read-Host "   Paste it here (or press Enter to skip for now)"
 Write-Host ""
+Write-Host "5. Your Firecrawl API key (free at https://firecrawl.dev)"
+Write-Host "   Lets Claude read and research any website — competitor sites, inspiration, etc."
+$FIRECRAWL_KEY  = Read-Host "   Paste it here (or press Enter to skip for now)"
+Write-Host ""
 
 # ── Step 2: Check Node.js ─────────────────────────────────
 Write-Step "Checking Node.js..."
@@ -138,10 +142,29 @@ if ($MAGIC_KEY.Trim()) {
         env     = [PSCustomObject]@{ API_KEY = $MAGIC_KEY.Trim() }
     }
     $configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "magic" -Value $magicServer -Force
-    Write-Green "GHL, Context7, and Magic MCPs installed"
-} else {
-    Write-Green "GHL and Context7 MCPs installed (Magic skipped — add key later)"
 }
+
+# Firecrawl — research any website (optional)
+if ($FIRECRAWL_KEY.Trim()) {
+    $firecrawlServer = [PSCustomObject]@{
+        command = "npx"
+        args    = @("-y", "firecrawl-mcp")
+        env     = [PSCustomObject]@{ FIRECRAWL_API_KEY = $FIRECRAWL_KEY.Trim() }
+    }
+    $configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "firecrawl" -Value $firecrawlServer -Force
+}
+
+# Fetch — pull content from any URL (no key needed)
+$fetchServer = [PSCustomObject]@{
+    command = "npx"
+    args    = @("-y", "@modelcontextprotocol/server-fetch")
+}
+$configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "fetch" -Value $fetchServer -Force
+
+$installed = @("GHL", "Context7", "Fetch")
+if ($MAGIC_KEY.Trim())     { $installed += "Magic" }
+if ($FIRECRAWL_KEY.Trim()) { $installed += "Firecrawl" }
+Write-Green ("MCPs installed: " + ($installed -join ", "))
 
 $configJson | ConvertTo-Json -Depth 10 | Set-Content -Path $DESKTOP_CONFIG -Encoding UTF8
 Write-Green "MCPs added to Claude desktop config"
@@ -399,6 +422,151 @@ description: Review insurance marketing content for compliance issues before pub
 2. Flag yellow items with suggested rewording
 3. Provide a compliant version of the content
 4. Note which state(s) the content is for (rules vary)
+"@
+
+    "seo" = @"
+---
+name: seo
+description: Optimize insurance agency websites for local search. Use when asked to improve SEO, write meta tags, set up schema markup, audit page titles, or improve Google rankings.
+---
+
+# SEO Skill — Insurance Agency Local Search
+
+## Page title formula
+[Service] | [City] | [Agency Name]
+Example: Life Insurance Agent | Phoenix, AZ | Wood Agency Life
+Keep under 60 characters.
+
+## Meta description formula
+[Benefit] + [City] + [CTA]. Keep under 155 characters. Include city name.
+
+## Local SEO checklist
+- Google Business Profile claimed and fully complete
+- Category: Insurance Agency
+- Every page has unique title tag with city name
+- Every page has meta description
+- Phone number is clickable on mobile
+- Schema markup added (InsuranceAgency type)
+
+## What to ask Claude
+- Write SEO title tags and meta descriptions for my homepage
+- Add schema markup to my insurance agency website
+- Write an FAQ section for my mortgage protection page for [city]
+- Audit my page titles — here's my site: [URL]
+"@
+
+    "cro" = @"
+---
+name: cro
+description: Optimize insurance websites to convert more visitors into leads. Use when asked to improve conversion rates, fix landing pages, improve CTAs, or get more form submissions.
+---
+
+# CRO Skill — Conversion Rate Optimization
+
+## The one rule
+Every page has ONE job: get the visitor to take ONE action.
+
+## Above the fold — must have all 5
+1. Clear headline — what you do + who you help + where
+2. Sub-headline — the main benefit
+3. Primary CTA button — high contrast, action verb
+4. Trust signal — license, years in business, or rating
+5. Your real photo — people buy from people
+
+## CTA copy that converts
+Good: Book a Free 15-Min Call, Get My Free Quote, See My Options
+Bad: Submit, Click Here, Learn More
+
+## Forms — less is more
+Ask only: Name, Phone, Email. Every extra field drops conversion 10%.
+
+## Trust signals to include
+- State insurance license number
+- Google review stars and count
+- Your real headshot (no stock photos)
+- No spam, no pressure near your form
+
+## What to ask Claude
+- Review my homepage for conversion issues — here's the URL: [URL]
+- Rewrite my hero section to convert better
+- Write 5 versions of a CTA button for my life insurance page
+- What trust signals am I missing on my landing page?
+"@
+
+    "web-copy" = @"
+---
+name: web-copy
+description: Write high-converting website copy for insurance agencies. Use when asked to write or rewrite homepage copy, landing page headlines, about pages, service descriptions, or any website text.
+---
+
+# Web Copy Skill — Insurance Agency Copywriting
+
+## The 1 rule
+Write about the client's problem, not your services. Nobody wants life insurance. They want their family protected.
+
+## StoryBrand framework (use for every page)
+1. Character — your client (not you)
+2. Problem — what they're afraid of
+3. Guide — you, positioned as the expert
+4. Plan — your simple 3-step process
+5. Call to action — one clear step
+6. Avoid failure — what happens if they don't act
+7. Success — their life after coverage
+
+## Headline formulas
+Problem: What happens to your family if something happens to you?
+Benefit: Peace of mind for [City] families, starting at X/month
+Local: Life Insurance Agent in [City] Who Explains It in Plain English
+
+## Copy by product
+Life Insurance: protect income, pay off debt, leave something behind
+Mortgage Protection: bank protects the lender, you protect your family
+Final Expense: peace of mind, not burdening children, dignity
+IUL/Annuities: retirement income concerns (never guarantee returns)
+
+## What to ask Claude
+- Write homepage copy for my [product] agency in [city] using StoryBrand
+- Rewrite my about page — current version: [paste]
+- Write 5 headline options for my mortgage protection landing page
+- Write FAQ copy for my life insurance page — 6 to 8 questions people actually ask
+"@
+
+    "analytics" = @"
+---
+name: analytics
+description: Read and act on website analytics for insurance agency sites. Use when asked to interpret Google Analytics, find which pages are getting traffic, understand bounce rates, or set up conversion tracking.
+---
+
+# Analytics Skill — Insurance Agency Website Analytics
+
+## Only metrics that matter
+- Form submissions (leads generated)
+- Phone clicks (mobile leads)
+- Conversion rate — 2 to 5 percent is solid for insurance
+- Traffic source — organic is free, paid costs money
+- Top pages — double down here
+
+## Install Google Analytics 4
+Add inside head tag on every page — replace G-XXXXXXXXXX with your ID:
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+
+## Track phone clicks
+Add onclick to phone link: onclick="gtag('event','click',{'event_category':'phone'})"
+
+## Track form submissions
+Add to thank-you page: gtag('event','generate_lead',{'event_category':'form'});
+
+## Red flags to fix immediately
+- Homepage bounce rate over 80% — headline or load speed problem
+- Zero conversions in a month — form broken or CTA missing
+- Average session under 30 seconds — content not relevant
+
+## What to ask Claude
+- Add Google Analytics tracking to my website — my ID is G-XXXXXXXXXX
+- Set up conversion tracking for my contact form
+- Here is my GA4 data [paste] — what should I focus on?
+- I am getting 500 visitors a month but zero leads — what is wrong?
 "@
 
     "sms" = @"

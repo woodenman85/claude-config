@@ -71,12 +71,12 @@ if [ -f "$DESKTOP_CONFIG" ]; then
     check "MCP servers block present" "fail" "run setup.sh again"
   fi
 
-  for server in ghl context7 magic; do
+  for server in ghl context7 fetch magic firecrawl; do
     if python3 -c "import json; d=json.load(open('$DESKTOP_CONFIG')); assert '$server' in d.get('mcpServers', {})" 2>/dev/null; then
       check "  $server MCP configured" "pass"
     else
-      if [ "$server" = "magic" ]; then
-        check "  magic MCP configured" "warn" "optional — add a 21st.dev key to enable"
+      if [ "$server" = "magic" ] || [ "$server" = "firecrawl" ]; then
+        check "  $server MCP configured" "warn" "optional — add API key to enable"
       else
         check "  $server MCP configured" "fail" "run setup.sh again"
       fi
@@ -111,7 +111,7 @@ echo ""
 
 # ── Skills ────────────────────────────────────────────────
 echo "Skills"
-for skill in ghl design website gmail calendar canva daily-briefing lead-nurture compliance sms; do
+for skill in ghl design website gmail calendar canva daily-briefing lead-nurture compliance sms seo cro web-copy analytics; do
   if [ -f "$HOME/.claude/skills/$skill/SKILL.md" ]; then
     check "  $skill skill" "pass"
   else

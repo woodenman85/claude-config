@@ -72,12 +72,12 @@ if (Test-Path $configPath) {
         } else {
             Check-Item "MCP servers block present" "fail" "run setup.ps1 again"
         }
-        foreach ($server in @("ghl","context7","magic")) {
+        foreach ($server in @("ghl","context7","fetch","magic","firecrawl")) {
             if ($config.mcpServers.$server) {
                 Check-Item "  $server MCP configured" "pass"
             } else {
-                if ($server -eq "magic") {
-                    Check-Item "  magic MCP configured" "warn" "optional — add a 21st.dev key to enable"
+                if ($server -eq "magic" -or $server -eq "firecrawl") {
+                    Check-Item "  $server MCP configured" "warn" "optional — add API key to enable"
                 } else {
                     Check-Item "  $server MCP configured" "fail" "run setup.ps1 again"
                 }
@@ -117,7 +117,7 @@ Write-Host ""
 
 # ── Skills ────────────────────────────────────────────────
 Write-Host "Skills"
-$skillList = @("ghl","design","website","gmail","calendar","canva","daily-briefing","lead-nurture","compliance","sms")
+$skillList = @("ghl","design","website","gmail","calendar","canva","daily-briefing","lead-nurture","compliance","sms","seo","cro","web-copy","analytics")
 foreach ($skill in $skillList) {
     $skillPath = "$env:USERPROFILE\.claude\skills\$skill\SKILL.md"
     if (Test-Path $skillPath) {

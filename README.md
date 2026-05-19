@@ -48,6 +48,12 @@ After setup, Claude can:
 | **Lead Nurture** | Draft follow-up sequences for life, mortgage, final expense |
 | **SMS Drafting** | Write compliant texts to leads and clients |
 | **Compliance Check** | Review marketing content before you post or send |
+| **SEO** | Local search optimization — titles, meta tags, schema, Google Business |
+| **CRO** | Convert more visitors into leads — CTAs, trust signals, form design |
+| **Web Copy** | Insurance-specific copywriting using the StoryBrand framework |
+| **Analytics** | Set up GA4 tracking, read your data, fix what's broken |
+| **Firecrawl** | Research competitor sites and scrape any URL for inspiration *(optional API key)* |
+| **Fetch** | Pull content from any URL — no API key needed |
 | **Gmail** | Search inbox, draft follow-up emails, write sequences |
 | **Google Calendar** | Schedule calls, set reminders, check availability |
 | **Canva** | Create social posts, flyers, lead magnets |

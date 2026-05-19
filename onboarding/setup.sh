@@ -36,6 +36,12 @@ echo -n "   Paste it here (or press Enter to skip for now): "
 read MAGIC_KEY
 echo ""
 
+echo "5. Your Firecrawl API key (free at https://firecrawl.dev)"
+echo "   Lets Claude read and research any website — competitor sites, inspiration, etc."
+echo -n "   Paste it here (or press Enter to skip for now): "
+read FIRECRAWL_KEY
+echo ""
+
 # ── Step 2: Check Node.js is installed ───────────────────
 if ! command -v node &> /dev/null; then
   echo -e "${RED}Node.js is not installed.${NC}"
@@ -138,9 +144,26 @@ if magic_key:
         "args": ["-y", "@21st-dev/magic@latest"],
         "env": { "API_KEY": magic_key }
     }
-    print("✓ GHL, Context7, and Magic MCPs installed")
-else:
-    print("✓ GHL and Context7 MCPs installed (Magic skipped — add key later)")
+
+# Firecrawl — research any website (optional, needs API key)
+firecrawl_key = "$FIRECRAWL_KEY".strip()
+if firecrawl_key:
+    servers["firecrawl"] = {
+        "command": "npx",
+        "args": ["-y", "firecrawl-mcp"],
+        "env": { "FIRECRAWL_API_KEY": firecrawl_key }
+    }
+
+# Fetch — pull content from any URL (no key needed)
+servers["fetch"] = {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-fetch"]
+}
+
+installed = ["GHL", "Context7", "Fetch"]
+if magic_key: installed.append("Magic")
+if firecrawl_key: installed.append("Firecrawl")
+print("✓ MCPs installed: " + ", ".join(installed))
 
 with open(config_path, "w") as f:
     json.dump(config, f, indent=2)
@@ -503,7 +526,207 @@ Hey [name]! Hope everything's great. If you know anyone who could use [product],
 - Log all texts as notes in GHL contact record
 EOF
 
-echo -e "${GREEN}✓ Skills installed (ghl, design, website, daily-briefing, lead-nurture, compliance, sms)${NC}"
+mkdir -p ~/.claude/skills/seo
+cat > ~/.claude/skills/seo/SKILL.md << 'SKILLEOF'
+---
+name: seo
+description: Optimize insurance agency websites for local search. Use when asked to improve SEO, write meta tags, set up schema markup, audit page titles, or improve Google rankings.
+---
+
+# SEO Skill — Insurance Agency Local Search
+
+## The goal
+Insurance agents need to show up when someone searches "life insurance agent near me" or "mortgage protection [city]". Local SEO is the highest-leverage activity.
+
+## Quick wins (do these first)
+
+### Page titles
+Formula: [Service] | [City] | [Agency Name]
+Example: Life Insurance Agent | Phoenix, AZ | Wood Agency Life
+Keep under 60 characters.
+
+### Meta descriptions
+Formula: [Benefit] + [City] + [CTA]
+Example: Protect your family with affordable life insurance in Phoenix. Get a free quote in minutes. Call today.
+Keep under 155 characters. Include city name. End with a CTA.
+
+### H1 headline — one per page, matches search intent
+Homepage: Life Insurance Agent in [City], [State]
+Service page: Affordable Mortgage Protection Insurance in [City]
+
+## Local SEO checklist
+- [ ] Google Business Profile claimed and complete (business.google.com)
+- [ ] Category set to "Insurance Agency"
+- [ ] All services listed (life, mortgage, final expense, IUL, annuities)
+- [ ] Photos uploaded (headshot, office)
+- [ ] Every page has unique title tag with city name
+- [ ] Every page has meta description
+- [ ] Phone number is clickable on mobile (tel: link)
+- [ ] Schema markup added (InsuranceAgency type)
+
+## Schema markup template
+Add inside <head> on every page:
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"InsuranceAgency","name":"[Agency]","telephone":"[Phone]","address":{"@type":"PostalAddress","addressLocality":"[City]","addressRegion":"[State]"},"url":"[URL]"}
+</script>
+
+## What to ask Claude
+- "Write SEO-optimized title tags and meta descriptions for my homepage"
+- "Add schema markup to my insurance agency website"
+- "Write an FAQ section for my mortgage protection page for [city]"
+- "Audit my page titles — here's my site: [URL]"
+SKILLEOF
+
+mkdir -p ~/.claude/skills/cro
+cat > ~/.claude/skills/cro/SKILL.md << 'SKILLEOF'
+---
+name: cro
+description: Optimize insurance websites to convert more visitors into leads. Use when asked to improve conversion rates, fix landing pages, improve CTAs, or get more form submissions.
+---
+
+# CRO Skill — Conversion Rate Optimization
+
+## The one rule
+Every page has ONE job: get the visitor to take ONE action. Remove everything that distracts from that.
+
+## Above the fold — must have all 5
+1. Clear headline — what you do + who you help + where
+2. Sub-headline — the main benefit or differentiator
+3. Primary CTA button — high contrast, action verb
+4. Trust signal — license number, years in business, or rating
+5. Your photo — people buy from people, not logos
+
+## CTA copy that converts
+Good: "Book a Free 15-Min Call", "Get My Free Quote", "See My Options"
+Bad: "Submit", "Click Here", "Learn More"
+
+## Forms — less is more
+Ask ONLY: Name, Phone, Email, (optional) What are you interested in?
+Every extra field drops conversion ~10%.
+
+## Trust signals to include
+- State insurance license number
+- Google review stars + count
+- Years in business or policies written
+- Your real headshot
+- "No spam, no pressure" near your form
+
+## Mobile (60%+ of traffic)
+- Phone number at top, clickable: <a href="tel:+1XXXXXXXXXX">
+- Sticky "Call Now" button on mobile
+- Buttons min 44px height
+- Text min 16px
+
+## Common conversion killers
+- Generic stock photos
+- "Welcome to our website" headline
+- No phone number above the fold
+- Form asking for too much info
+- No social proof anywhere
+
+## What to ask Claude
+- "Review my homepage for conversion issues — here's the URL: [URL]"
+- "Rewrite my hero section to convert better"
+- "What trust signals am I missing?"
+- "Write 5 versions of a CTA button for my life insurance page"
+SKILLEOF
+
+mkdir -p ~/.claude/skills/web-copy
+cat > ~/.claude/skills/web-copy/SKILL.md << 'SKILLEOF'
+---
+name: web-copy
+description: Write high-converting website copy for insurance agencies. Use when asked to write or rewrite homepage copy, landing page headlines, about pages, service descriptions, or any website text.
+---
+
+# Web Copy Skill — Insurance Agency Copywriting
+
+## The #1 rule
+Write about the client's problem, not your services. Nobody wants "life insurance." They want their family protected.
+
+## StoryBrand framework (use for every page)
+1. Character — your client (not you)
+2. Problem — what they're afraid of
+3. Guide — you, positioned as the expert
+4. Plan — your simple 3-step process
+5. Call to action — one clear step
+6. Avoid failure — what happens if they don't act
+7. Success — their life after coverage
+
+## Headline formulas
+Problem: "What happens to your family if something happens to you?"
+Benefit: "Peace of mind for [City] families, starting at $X/month"
+Local: "Life Insurance Agent in [City] Who Explains It in Plain English"
+
+## Copy by product
+Life Insurance: protect income, pay off debt, leave something behind
+Mortgage Protection: bank protects the lender — you protect your family
+Final Expense: peace of mind, not burdening children, dignity
+IUL/Annuities: retirement income concerns, not outliving savings (never guarantee returns)
+
+## About page formula
+[Why you got into insurance — personal story, 2-3 sentences]
+[Who you specifically help and where, 1-2 sentences]
+[Your approach and what makes you different]
+[Something human — family, local tie]
+[CTA: invite them to meet you]
+
+## What to ask Claude
+- "Write homepage copy for my [product] agency in [city] using StoryBrand"
+- "Rewrite my about page — current version: [paste]"
+- "Write 5 headline options for my mortgage protection landing page"
+- "Write FAQ copy for my life insurance page — 6-8 questions people actually ask"
+SKILLEOF
+
+mkdir -p ~/.claude/skills/analytics
+cat > ~/.claude/skills/analytics/SKILL.md << 'SKILLEOF'
+---
+name: analytics
+description: Read and act on website analytics for insurance agency sites. Use when asked to interpret Google Analytics, find which pages are getting traffic, understand bounce rates, or set up conversion tracking.
+---
+
+# Analytics Skill — Insurance Agency Website Analytics
+
+## The only metrics that matter
+- Form submissions (leads generated)
+- Phone clicks (mobile leads)
+- Conversion rate — 2-5% is solid for insurance
+- Traffic source (organic = free, paid = costs money)
+- Top pages (double down here)
+
+## Google Analytics 4 — install tracking code
+Add inside <head> on every page:
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+
+## Track phone clicks (add to phone link)
+<a href="tel:+1XXXXXXXXXX" onclick="gtag('event','click',{'event_category':'phone'})">
+
+## Track form submissions (add to thank-you page or on submit)
+gtag('event','generate_lead',{'event_category':'form'});
+
+## Check monthly
+1. How many leads did the site generate?
+2. Which pages get the most traffic?
+3. Which pages have high bounce rates?
+4. Where is traffic coming from?
+
+## Red flags to fix immediately
+- Homepage bounce rate over 80% — headline or speed problem
+- Zero conversions in a month — form broken or CTA missing
+- Average session under 30 seconds — content not loading or not relevant
+
+## Google Search Console (free SEO data)
+Set up at search.google.com/search-console
+Check Performance → Queries to see what search terms bring people to your site.
+
+## What to ask Claude
+- "Add Google Analytics tracking to my website — my ID is G-XXXXXXXXXX"
+- "Set up conversion tracking for my contact form"
+- "Here's my GA4 data [paste] — what should I focus on?"
+- "I'm getting 500 visitors/month but zero leads — what's wrong?"
+SKILLEOF
+
+echo -e "${GREEN}✓ Skills installed (ghl, design, website, daily-briefing, lead-nurture, compliance, sms, seo, cro, web-copy, analytics)${NC}"
 
 # ── Step 7: Git identity ──────────────────────────────────
 echo ""
