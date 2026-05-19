@@ -161,7 +161,21 @@ $fetchServer = [PSCustomObject]@{
 }
 $configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "fetch" -Value $fetchServer -Force
 
-$installed = @("GHL", "Context7", "Fetch")
+# Playwright — browser automation for testing websites (Microsoft)
+$playwrightServer = [PSCustomObject]@{
+    command = "npx"
+    args    = @("-y", "@playwright/mcp@latest")
+}
+$configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "playwright" -Value $playwrightServer -Force
+
+# Chrome DevTools — inspect pages, debug CSS, check console errors (Anthropic official)
+$devtoolsServer = [PSCustomObject]@{
+    command = "npx"
+    args    = @("-y", "@anthropic-ai/chrome-devtools-mcp@latest")
+}
+$configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "chrome-devtools" -Value $devtoolsServer -Force
+
+$installed = @("GHL", "Context7", "Fetch", "Playwright", "Chrome DevTools")
 if ($MAGIC_KEY.Trim())     { $installed += "Magic" }
 if ($FIRECRAWL_KEY.Trim()) { $installed += "Firecrawl" }
 Write-Green ("MCPs installed: " + ($installed -join ", "))

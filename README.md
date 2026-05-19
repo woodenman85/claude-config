@@ -54,6 +54,8 @@ After setup, Claude can:
 | **Analytics** | Set up GA4 tracking, read your data, fix what's broken |
 | **Firecrawl** | Research competitor sites and scrape any URL for inspiration *(optional API key)* |
 | **Fetch** | Pull content from any URL — no API key needed |
+| **Playwright** | Test websites in a real browser — check mobile layouts, fill forms, verify pages load |
+| **Chrome DevTools** | Inspect live pages, debug CSS, catch console errors — Anthropic official |
 | **Gmail** | Search inbox, draft follow-up emails, write sequences |
 | **Google Calendar** | Schedule calls, set reminders, check availability |
 | **Canva** | Create social posts, flyers, lead magnets |

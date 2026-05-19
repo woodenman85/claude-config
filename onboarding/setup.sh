@@ -160,7 +160,19 @@ servers["fetch"] = {
     "args": ["-y", "@modelcontextprotocol/server-fetch"]
 }
 
-installed = ["GHL", "Context7", "Fetch"]
+# Playwright — browser automation for testing websites (Microsoft)
+servers["playwright"] = {
+    "command": "npx",
+    "args": ["-y", "@playwright/mcp@latest"]
+}
+
+# Chrome DevTools — inspect pages, debug CSS, check console errors (Anthropic official)
+servers["chrome-devtools"] = {
+    "command": "npx",
+    "args": ["-y", "@anthropic-ai/chrome-devtools-mcp@latest"]
+}
+
+installed = ["GHL", "Context7", "Fetch", "Playwright", "Chrome DevTools"]
 if magic_key: installed.append("Magic")
 if firecrawl_key: installed.append("Firecrawl")
 print("✓ MCPs installed: " + ", ".join(installed))

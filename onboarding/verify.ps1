@@ -72,11 +72,11 @@ if (Test-Path $configPath) {
         } else {
             Check-Item "MCP servers block present" "fail" "run setup.ps1 again"
         }
-        foreach ($server in @("ghl","context7","fetch","magic","firecrawl")) {
+        foreach ($server in @("ghl","context7","fetch","playwright","chrome-devtools","magic","firecrawl")) {
             if ($config.mcpServers.$server) {
                 Check-Item "  $server MCP configured" "pass"
             } else {
-                if ($server -eq "magic" -or $server -eq "firecrawl") {
+                if ($server -eq "magic" -or $server -eq "firecrawl" -or $server -eq "chrome-devtools") {
                     Check-Item "  $server MCP configured" "warn" "optional — add API key to enable"
                 } else {
                     Check-Item "  $server MCP configured" "fail" "run setup.ps1 again"

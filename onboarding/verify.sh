@@ -71,11 +71,11 @@ if [ -f "$DESKTOP_CONFIG" ]; then
     check "MCP servers block present" "fail" "run setup.sh again"
   fi
 
-  for server in ghl context7 fetch magic firecrawl; do
+  for server in ghl context7 fetch playwright chrome-devtools magic firecrawl; do
     if python3 -c "import json; d=json.load(open('$DESKTOP_CONFIG')); assert '$server' in d.get('mcpServers', {})" 2>/dev/null; then
       check "  $server MCP configured" "pass"
     else
-      if [ "$server" = "magic" ] || [ "$server" = "firecrawl" ]; then
+      if [ "$server" = "magic" ] || [ "$server" = "firecrawl" ] || [ "$server" = "chrome-devtools" ]; then
         check "  $server MCP configured" "warn" "optional — add API key to enable"
       else
         check "  $server MCP configured" "fail" "run setup.sh again"
