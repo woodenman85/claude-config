@@ -157,7 +157,7 @@ if firecrawl_key:
 # Fetch — pull content from any URL (no key needed)
 servers["fetch"] = {
     "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-fetch"]
+    "args": ["-y", "mcp-fetch"]
 }
 
 # Playwright — browser automation for testing websites (Microsoft)
@@ -166,10 +166,10 @@ servers["playwright"] = {
     "args": ["-y", "@playwright/mcp@latest"]
 }
 
-# Chrome DevTools — inspect pages, debug CSS, check console errors (Anthropic official)
+# Chrome DevTools — inspect pages, debug CSS, check console errors
 servers["chrome-devtools"] = {
     "command": "npx",
-    "args": ["-y", "@anthropic-ai/chrome-devtools-mcp@latest"]
+    "args": ["-y", "chrome-devtools-mcp"]
 }
 
 installed = ["GHL", "Context7", "Fetch", "Playwright", "Chrome DevTools"]

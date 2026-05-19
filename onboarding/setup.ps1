@@ -157,7 +157,7 @@ if ($FIRECRAWL_KEY.Trim()) {
 # Fetch — pull content from any URL (no key needed)
 $fetchServer = [PSCustomObject]@{
     command = "npx"
-    args    = @("-y", "@modelcontextprotocol/server-fetch")
+    args    = @("-y", "mcp-fetch")
 }
 $configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "fetch" -Value $fetchServer -Force
 
@@ -168,10 +168,10 @@ $playwrightServer = [PSCustomObject]@{
 }
 $configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "playwright" -Value $playwrightServer -Force
 
-# Chrome DevTools — inspect pages, debug CSS, check console errors (Anthropic official)
+# Chrome DevTools — inspect pages, debug CSS, check console errors
 $devtoolsServer = [PSCustomObject]@{
     command = "npx"
-    args    = @("-y", "@anthropic-ai/chrome-devtools-mcp@latest")
+    args    = @("-y", "chrome-devtools-mcp")
 }
 $configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "chrome-devtools" -Value $devtoolsServer -Force
 
