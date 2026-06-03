@@ -856,7 +856,59 @@ Landing page for ads:
 No navigation. Single focus. Form: name, phone, email only. Mobile-first."
 SKILLEOF
 
-echo -e "${GREEN}✓ Skills installed (ghl, design, website, site-builder, daily-briefing, lead-nurture, compliance, sms, seo, cro, web-copy, analytics)${NC}"
+mkdir -p ~/.claude/skills/social-media
+cat > ~/.claude/skills/social-media/SKILL.md << 'SKILLEOF'
+---
+name: social-media
+description: Plan and write social media content for insurance agents on Facebook and Instagram. Use when asked to write a post, create a content calendar, draft captions, or plan social content for the week/month.
+---
+
+# Social Media Skill — Insurance Agent Content
+
+## The golden rule
+Educate, don't sell. Every post should give value first. People who learn from you buy from you.
+
+## Content pillars (rotate through these)
+- Education (40%): "3 things your employer's life insurance doesn't cover"
+- Stories (25%): client wins anonymized, your own story
+- Trust/Credibility (20%): carrier logos, license, reviews
+- Offers/CTA (15%): "book a free call" — never more than 1 in 5 posts
+
+## Facebook — best post types
+- Short story posts 200-400 words — real client situations anonymized
+- Did you know educational posts
+- Video or photo of you — face posts outperform everything
+- Reviews/testimonials screenshot from Google
+
+Hook formulas: "Most people don't know this about life insurance." | "A client called me crying last week." | "Your employer's life insurance is probably not enough."
+
+## Instagram — best post types
+- Carousel posts (swipe-through tips) — highest saves/shares
+- Reels 30-60 seconds — highest reach
+- Quote graphics over your photo
+
+Best hashtags: #lifeinsurance #termlife #familyprotection #insuranceagent #financialprotection #mortgageprotection #finalexpense #insurancetips #protectyourfamily
+
+## 30-day content calendar
+Week 1 Education: difference between term and whole, coverage calculator, client story
+Week 2 Trust: your story, carrier spotlight, Google review screenshot
+Week 3 Education: 5 things people get wrong, product spotlight, FAQ answer
+Week 4 CTA: behind the scenes, open consultation spots, end of month reflection
+
+## Compliance reminders
+- Never promise specific rates without disclosure
+- Never say guaranteed approval without qualification
+- Use may/can/potential for benefit claims
+- Include license number on ads
+
+## What to ask Claude
+"Write 5 social media posts for this week. Products: [list]. City: [city]. Focus: [education/trust/CTA]."
+"Write a Facebook post about [topic] — story hook, education, soft CTA. Under 300 words."
+"Create a 5-slide Instagram carousel about [topic]."
+"Write an Instagram caption for a photo of [describe photo]."
+SKILLEOF
+
+echo -e "${GREEN}✓ Skills installed (ghl, design, website, site-builder, social-media, daily-briefing, lead-nurture, compliance, sms, seo, cro, web-copy, analytics)${NC}"
 
 # ── Step 7: Git identity ──────────────────────────────────
 echo ""

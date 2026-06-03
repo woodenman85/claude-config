@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ============================================================
+    CUSTOMIZE THIS SITE — Find every "CUSTOMIZE:" comment below
+    and replace with your own info. No coding knowledge needed.
+    Just find and replace the placeholder text.
+  ============================================================ -->
+
+  <!-- CUSTOMIZE: Your name, city, state -->
+  <title>Your Name | Life Insurance | Your City, State</title>
+
+  <!-- CUSTOMIZE: Your description (shows up in Google search results) -->
+  <meta name="description" content="Independent life insurance agent serving families in Your City, State. Term life, mortgage protection, final expense, and IUL — 50+ carriers, zero pressure. Free consultation.">
+
+  <!-- CUSTOMIZE: Your website URL -->
+  <link rel="canonical" href="https://yourwebsite.com/">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/index.js"></script>
+
+  <style>
+    /* ============================================================
+      COLOR SCHEME — Change these to customize your brand colors.
+      --gold: your accent color (buttons, highlights)
+      --bg-deep: main background
+    ============================================================ */
+    :root {
+      --gold:       #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-dim:   rgba(201,168,76,0.08);
+      --bg-deep:    #080808;
+      --bg-mid:     #111111;
+      --bg-card:    #161616;
+      --border:     rgba(201,168,76,0.15);
+      --text-primary: #F5F0E8;
+      --text-muted:   rgba(245,240,232,0.65);
+      --text-dim:     rgba(245,240,232,0.35);
+      --radius:     12px;
+      --transition: 0.25s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .section { padding: 6rem 0; }
+    .eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    h1,h2,h3,h4 { font-family: 'Cinzel', serif; line-height: 1.2; }
+    h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); }
+    h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
+    h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+    p  { color: var(--text-muted); line-height: 1.8; }
+
+    .italic { font-family: 'Playfair Display', serif; font-style: italic; }
+    .gold   { color: var(--gold); }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gold-line {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin: 1.5rem 0;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.9rem 2rem; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.05em;
+      text-decoration: none; transition: all var(--transition); cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--bg-deep);
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--gold);
+      border: 1px solid var(--gold);
+    }
+    .btn-outline:hover { background: var(--gold-dim); }
+
+    /* ── NAVIGATION ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1rem 0;
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span { display: block; font-size: 0.6rem; font-weight: 400; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; }
+    .nav-links {
+      display: flex; align-items: center; gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none; color: var(--text-muted);
+      font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { font-size: 0.8rem !important; padding: 0.6rem 1.4rem !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { width: 22px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: all 0.3s; display: block; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      nav.menu-open .nav-links {
+        display: flex; flex-direction: column; gap: 1.5rem;
+        position: fixed; inset: 0; background: var(--bg-deep);
+        align-items: center; justify-content: center;
+        font-size: 1.1rem;
+      }
+      nav.menu-open .nav-links a { font-size: 1rem; }
+    }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 80px;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.03) 1px, transparent 1px),
+                  linear-gradient(225deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--gold-dim); border: 1px solid var(--border);
+      border-radius: 100px; padding: 0.4rem 1rem;
+      font-size: 0.75rem; color: var(--gold);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero h1 { margin-bottom: 1.5rem; }
+    .hero p {
+      font-size: 1.1rem; margin-bottom: 2.5rem; max-width: 560px;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* ── TICKER ─────────────────────────────────────────── */
+    .ticker {
+      background: var(--bg-mid); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      overflow: hidden; padding: 0.8rem 0;
+    }
+    .ticker-track {
+      display: flex; gap: 3rem;
+      animation: ticker-scroll 30s linear infinite;
+      width: max-content;
+    }
+    .ticker-item { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); white-space: nowrap; }
+    .ticker-item .dot { color: var(--gold); margin-right: 0.5rem; }
+    @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── STATS ──────────────────────────────────────────── */
+    .stats-section { background: var(--bg-mid); border-bottom: 1px solid var(--border); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .stat-item { text-align: center; padding: 2.5rem 1rem; }
+    .stat-num { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 0.5rem; }
+    .stat-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+    @media (max-width: 640px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── ABOUT ──────────────────────────────────────────── */
+    .about-section { background: var(--bg-deep); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-visual { position: relative; }
+    .about-img {
+      width: 100%; aspect-ratio: 4/5; object-fit: cover;
+      object-position: top center; border-radius: 16px; display: block;
+    }
+    .about-img-placeholder {
+      width: 100%; aspect-ratio: 4/5;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1rem;
+    }
+    .about-img-placeholder p { font-size: 0.75rem; color: var(--text-dim); text-align: center; letter-spacing: 0.1em; text-transform: uppercase; }
+    .about-accent-card {
+      position: absolute; bottom: -2rem; right: -2rem;
+      background: var(--gold); color: var(--bg-deep);
+      padding: 1.5rem; border-radius: 12px; text-align: center; min-width: 140px;
+    }
+    .about-accent-card .num { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 700; line-height: 1; }
+    .about-accent-card .lbl { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.25rem; }
+    .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    .value-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; }
+    .value-icon { color: var(--gold); font-size: 1.25rem; margin-top: 0.1rem; flex-shrink: 0; }
+    .value-text h4 { font-size: 0.85rem; font-family: 'Inter', sans-serif; font-weight: 600; margin-bottom: 0.2rem; }
+    .value-text p { font-size: 0.8rem; color: var(--text-dim); }
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-accent-card { right: 1rem; }
+    }
+
+    /* ── SERVICES ───────────────────────────────────────── */
+    .services-section { background: var(--bg-mid); }
+    .section-header { text-align: center; max-width: 640px; margin: 0 auto 4rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .service-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 2rem; transition: all var(--transition); position: relative; overflow: hidden;
+    }
+    .service-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+    .service-icon { font-size: 2rem; color: var(--gold); margin-bottom: 1.25rem; }
+    .service-card h3 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+    .service-card p { font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .service-link { color: var(--gold); text-decoration: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; }
+    .service-link:hover { text-decoration: underline; }
+    .service-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      background: var(--gold); color: var(--bg-deep);
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 100px;
+    }
+    @media (max-width: 900px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .services-grid { grid-template-columns: 1fr; } }
+
+    /* ── HOW IT WORKS ───────────────────────────────────── */
+    .process-section { background: var(--bg-deep); }
+    .process-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; margin-top: 4rem; }
+    .process-step { text-align: center; }
+    .process-num { font-family: 'Cinzel', serif; font-size: 4rem; font-weight: 700; color: var(--border); line-height: 1; margin-bottom: 1rem; }
+    .process-step h3 { margin-bottom: 0.75rem; }
+    .process-cta { text-align: center; margin-top: 3rem; }
+    .process-cta p { margin-bottom: 1.5rem; font-size: 1rem; }
+    @media (max-width: 768px) { .process-steps { grid-template-columns: 1fr; gap: 2rem; } }
+
+    /* ── TESTIMONIALS ───────────────────────────────────── */
+    .testimonials-section { background: var(--bg-mid); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .testimonial-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem;
+    }
+    .stars { color: var(--gold); font-size: 1rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
+    .testimonial-card blockquote { font-size: 0.95rem; color: var(--text-muted); font-style: italic; margin-bottom: 1.25rem; }
+    .testimonial-author { font-size: 0.8rem; font-weight: 600; color: var(--text-dim); }
+    @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+    /* ── CONTACT / QUOTE FORM ───────────────────────────── */
+    .contact-section { background: var(--bg-deep); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .form-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
+    .form-card h3 { margin-bottom: 0.5rem; }
+    .form-card p { font-size: 0.9rem; margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 0.85rem 1rem; background: var(--bg-mid);
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text-primary); font-size: 0.95rem; font-family: inherit;
+      transition: border-color var(--transition);
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--gold);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .contact-info p { margin-bottom: 1rem; }
+    .contact-detail { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .contact-detail-icon { width: 44px; height: 44px; background: var(--gold-dim); border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 1.1rem; flex-shrink: 0; }
+    .contact-detail a { color: var(--text-primary); text-decoration: none; font-weight: 500; }
+    .contact-detail a:hover { color: var(--gold); }
+    @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer { background: var(--bg-mid); border-top: 1px solid var(--border); padding: 4rem 0 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+    .footer-brand p { font-size: 0.9rem; color: var(--text-dim); margin-top: 1rem; max-width: 280px; }
+    .footer-col h4 { font-family: 'Inter', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-links a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; transition: color var(--transition); }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid var(--border); gap: 1rem; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.8rem; color: var(--text-dim); }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+    /* ── STICKY MOBILE BAR ──────────────────────────────── */
+    .mobile-sticky-bar {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+      background: var(--bg-mid); border-top: 1px solid var(--border);
+      padding: 0.75rem 1rem; gap: 0.75rem;
+    }
+    .mobile-sticky-bar a { flex: 1; text-align: center; padding: 0.75rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
+    .mobile-sticky-bar .call-btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-primary); }
+    .mobile-sticky-bar .quote-btn { background: var(--gold); color: var(--bg-deep); }
+    @media (max-width: 768px) { .mobile-sticky-bar { display: flex; } body { padding-bottom: 72px; } }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+
+  <!-- ============================================================
+    SCHEMA MARKUP — CUSTOMIZE: Fill in your agency details
+  ============================================================ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "InsuranceAgency",
+    "name": "Your Agency Name",
+    "description": "Independent life insurance agency serving families in Your City, State.",
+    "telephone": "YOUR-PHONE-NUMBER",
+    "email": "your@email.com",
+    "url": "https://yourwebsite.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Your City",
+      "addressRegion": "AZ",
+      "addressCountry": "US"
+    },
+    "openingHours": "Mo-Fr 09:00-17:00",
+    "priceRange": "Free consultation"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ─────────────────────────────────────── -->
+  <nav id="mainNav">
+    <div class="container nav-inner">
+      <!-- CUSTOMIZE: Your agency name and tagline -->
+      <a href="index.html" class="nav-logo">
+        Your Agency Name
+        <span>Life Insurance · Your City, State</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <!-- CUSTOMIZE: Your phone number -->
+        <li><a href="#contact" class="btn btn-primary nav-cta">Get My Quote</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <!-- CUSTOMIZE: Your location and product focus -->
+        <div class="hero-badge">
+          ✦ Independent · Family-Run · Serving Families Nationwide
+        </div>
+
+        <!-- CUSTOMIZE: Your headline — make it about the client's problem -->
+        <h1>
+          Life Insurance That<br>
+          <span class="italic gold-gradient-text">Actually Fits.</span>
+        </h1>
+
+        <!-- CUSTOMIZE: Your value proposition -->
+        <p>
+          Most agents work for one company — and can legally only offer that company's products.
+          We work for you. One conversation compares 50+ top-rated carriers. No pressure.
+          No jargon. Just the right fit — or we'll tell you to look elsewhere.
+        </p>
+
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-primary">Get My Free Quote →</a>
+          <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TICKER ─────────────────────────────────────────── -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <!-- Repeating twice for seamless loop -->
+      <span class="ticker-item"><span class="dot">✦</span> Term Life</span>
+      <span class="ticker-item"><span class="dot">✦</span> Whole Life</span>
+      <span class="ticker-item"><span class="dot">✦</span> Mortgage Protection</span>
+      <span class="ticker-item"><span class="dot">✦</span> IUL & Annuities</span>
+      <span class="ticker-item"><span class="dot">✦</span> Final Expense</span>
+      <span class="ticker-item"><span class="dot">✦</span> Infinite Banking</span>
+      <span class="ticker-item"><span class="dot">✦</span> 50+ Carriers</span>
+      <span class="ticker-item"><span class="dot">✦</span> Nationwide Coverage</span>
+      <span class="ticker-item"><span class="dot">✦</span> Term Life</span>
+      <span class="ticker-item"><span class="dot">✦</span> Whole Life</span>
+      <span class="ticker-item"><span class="dot">✦</span> Mortgage Protection</span>
+      <span class="ticker-item"><span class="dot">✦</span> IUL & Annuities</span>
+      <span class="ticker-item"><span class="dot">✦</span> Final Expense</span>
+      <span class="ticker-item"><span class="dot">✦</span> Infinite Banking</span>
+      <span class="ticker-item"><span class="dot">✦</span> 50+ Carriers</span>
+      <span class="ticker-item"><span class="dot">✦</span> Nationwide Coverage</span>
+    </div>
+  </div>
+
+  <!-- ── STATS ──────────────────────────────────────────── -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <!-- CUSTOMIZE: Your real stats -->
+        <div class="stat-item">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Insurance Carriers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">Same-Day</div>
+          <div class="stat-label">Coverage Available</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50</div>
+          <div class="stat-label">States Covered</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">Free</div>
+          <div class="stat-label">Consultation Always</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ──────────────────────────────────────────── -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <!-- CUSTOMIZE: Replace with your photo
+               Add your photo to the images/ folder and update the src -->
+          <div class="about-img-placeholder">
+            <p>📷 Add your photo here<br>images/your-photo.jpg</p>
+          </div>
+          <!-- Uncomment and update when you have your photo:
+          <img src="images/your-photo.jpg"
+               alt="Your Name — Your Agency Name"
+               class="about-img"
+               loading="lazy">
+          -->
+          <div class="about-accent-card">
+            <div class="num">50+</div>
+            <div class="lbl">Top Carriers</div>
+          </div>
+        </div>
+
+        <div class="about-content reveal">
+          <div class="eyebrow">Who We Are</div>
+          <!-- CUSTOMIZE: Your headline -->
+          <h2>We've Sat Where<br><span class="italic gold-gradient-text">You're Sitting.</span></h2>
+          <div class="gold-line"></div>
+
+          <!-- CUSTOMIZE: Your story — be personal and real -->
+          <p style="margin-bottom:1.25rem;">
+            [Your story here. Why did you get into insurance? What personal experience
+            connects you to this work? The more real and specific, the better.]
+          </p>
+          <p style="margin-bottom:1.25rem;">
+            [More about your approach — how you work with clients differently than
+            a captive agent would. What makes you the right choice?]
+          </p>
+
+          <!-- CUSTOMIZE: A powerful quote or personal moment -->
+          <div style="margin:1.5rem 0;padding:1.25rem 1.5rem;border-left:3px solid var(--gold);background:var(--gold-dim);border-radius:0 8px 8px 0;">
+            <p style="color:var(--text-primary);font-style:italic;margin:0;line-height:1.8;font-size:0.95rem;">
+              "A powerful quote about why you do this work — something personal and real."
+            </p>
+          </div>
+
+          <div class="about-values">
+            <!-- CUSTOMIZE: Your 4 core values/differentiators -->
+            <div class="value-item">
+              <div class="value-icon"><i class="ph-duotone ph-shield-check"></i></div>
+              <div class="value-text">
+                <h4>Protection First</h4>
+                <p>Coverage built around your family's needs</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-icon"><i class="ph-duotone ph-handshake"></i></div>
+              <div class="value-text">
+                <h4>No Pressure</h4>
+                <p>We find the right fit — or we say so</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-icon"><i class="ph-duotone ph-phone-call"></i></div>
+              <div class="value-text">
+                <h4>Direct Access</h4>
+                <p>You call us — not an 800 number</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-icon"><i class="ph-duotone ph-globe-hemisphere-west"></i></div>
+              <div class="value-text">
+                <h4>50+ Carriers</h4>
+                <p>We shop them all to find your best rate</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ───────────────────────────────────────── -->
+  <section class="section services-section" id="services">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="eyebrow">Our Services</div>
+        <h2>Coverage That Fits Your Life</h2>
+        <p>There's no one-size-fits-all policy. We ask the right questions, then find coverage that makes sense for your life — not the easiest sale for us.</p>
+      </div>
+
+      <div class="services-grid">
+        <!-- CUSTOMIZE: Remove products you don't offer, add ones you do -->
+
+        <div class="service-card reveal">
+          <div class="service-badge">Most Popular</div>
+          <div class="service-icon"><i class="ph-duotone ph-shield-check"></i></div>
+          <h3>Life Insurance</h3>
+          <p>Term, Whole, and Universal policies — we find the right fit. Protect your family from loss without leaving them with financial decisions made in grief.</p>
+          <a href="#contact" class="service-link">Get a Quote →</a>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="ph-duotone ph-house"></i></div>
+          <h3>Mortgage Protection</h3>
+          <p>Peace of mind knowing your family keeps a roof over their head, no matter what life throws at you.</p>
+          <a href="#contact" class="service-link">Get a Quote →</a>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="ph-duotone ph-chart-line-up"></i></div>
+          <h3>IUL & Annuities</h3>
+          <p>Indexed Universal Life gives you lifelong protection with market-linked growth. Tax-advantaged retirement income through policy loans.</p>
+          <a href="#contact" class="service-link">Get a Quote →</a>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="ph-duotone ph-flower"></i></div>
+          <h3>Final Expense</h3>
+          <p>Give your family the gift of a plan. Affordable coverage so your loved ones aren't left with unexpected costs during an already difficult time.</p>
+          <a href="#contact" class="service-link">Get a Quote →</a>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="ph-duotone ph-bank"></i></div>
+          <h3>Infinite Banking</h3>
+          <p>Harness your whole life policy to become your own bank. Borrow against your cash value without stopping its growth.</p>
+          <a href="#contact" class="service-link">Get a Quote →</a>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="ph-duotone ph-question"></i></div>
+          <h3>Been Denied Before?</h3>
+          <p>A denial from one carrier isn't a verdict — it's one company's rulebook. Different carriers, different answers. Let us find one that works for you.</p>
+          <a href="#contact" class="service-link">Let's Talk →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ───────────────────────────────────── -->
+  <section class="section process-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="eyebrow">How It Works</div>
+        <h2>Getting Covered Is<br><span class="italic gold-gradient-text">Simpler Than You Think</span></h2>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="process-num">01</div>
+          <h3>Tell Us What Matters</h3>
+          <p>Share your family's goals in 2 minutes. No paperwork, no commitment, no pressure.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="process-num">02</div>
+          <h3>We Find Your Best Fit</h3>
+          <p>We compare 50+ top-rated carriers and walk you through real quotes tailored to your health, budget, and goals.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="process-num">03</div>
+          <h3>Your Family Is Protected</h3>
+          <p>Apply, get approved, and sleep easy. We stay with you long after the policy starts.</p>
+        </div>
+      </div>
+
+      <div class="process-cta reveal">
+        <p>Every day without coverage is a day your family is exposed. The conversation takes 15 minutes.</p>
+        <a href="#contact" class="btn btn-primary">Start That Conversation →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ───────────────────────────────────── -->
+  <section class="section testimonials-section" id="testimonials">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="eyebrow">Client Stories</div>
+        <h2>What Our Clients Say</h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <!-- CUSTOMIZE: Replace with your real Google reviews -->
+        <div class="testimonial-card reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>"[Paste a real Google review here. Ask happy clients to leave one at g.page/your-business]"</blockquote>
+          <div class="testimonial-author">— Client First Name, City</div>
+        </div>
+        <div class="testimonial-card reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>"[Paste another real Google review here.]"</blockquote>
+          <div class="testimonial-author">— Client First Name, City</div>
+        </div>
+        <div class="testimonial-card reveal">
+          <div class="stars">★★★★★</div>
+          <blockquote>"[Paste another real Google review here.]"</blockquote>
+          <div class="testimonial-author">— Client First Name, City</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT / QUOTE ─────────────────────────────────── -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="eyebrow">Get Started</div>
+          <h2>Get Your<br><span class="italic gold-gradient-text">Free Quote</span></h2>
+          <div class="gold-line"></div>
+          <p style="margin-bottom:2rem;">No bait-and-switch. Your quote is based on your real circumstances. Takes less than 2 minutes to start.</p>
+
+          <!-- CUSTOMIZE: Your contact details -->
+          <div class="contact-detail">
+            <div class="contact-detail-icon"><i class="ph-duotone ph-phone"></i></div>
+            <div>
+              <div style="font-size:0.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.2rem;">Call or Text</div>
+              <a href="tel:YOUR-PHONE-NUMBER">(XXX) XXX-XXXX</a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon"><i class="ph-duotone ph-envelope"></i></div>
+            <div>
+              <div style="font-size:0.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.2rem;">Email</div>
+              <a href="mailto:YOUR-EMAIL">your@email.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card reveal">
+          <h3>Request Your Free Quote</h3>
+          <p>A licensed agent will reach out within 1 business day.</p>
+
+          <!-- CUSTOMIZE: Connect this form to your GHL or email service -->
+          <!-- To connect to GHL, replace action with your GHL form embed URL -->
+          <form id="quoteForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" name="firstName" placeholder="Jane" required>
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" name="lastName" placeholder="Smith" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" name="phone" placeholder="(928) 555-0100" required>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="jane@example.com" required>
+            </div>
+            <div class="form-group">
+              <label>I'm interested in</label>
+              <select name="product">
+                <option value="">Select a product...</option>
+                <option>Life Insurance (Term or Whole)</option>
+                <option>Mortgage Protection</option>
+                <option>Final Expense</option>
+                <option>IUL / Annuities</option>
+                <option>Infinite Banking</option>
+                <option>Not sure — help me figure it out</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+              Get My Free Quote →
+            </button>
+            <p style="font-size:0.75rem;text-align:center;margin-top:1rem;color:var(--text-dim);">
+              No spam. No pressure. We'll reach out within 1 business day.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <!-- CUSTOMIZE: Your agency name and description -->
+          <div class="nav-logo" style="font-size:1.1rem;">Your Agency Name</div>
+          <p>Independent life insurance agency serving families in [Your City] and nationwide. We work for you — not a carrier.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Life Insurance</a></li>
+            <li><a href="#services">Mortgage Protection</a></li>
+            <li><a href="#services">Final Expense</a></li>
+            <li><a href="#services">IUL & Annuities</a></li>
+            <li><a href="#services">Infinite Banking</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#testimonials">Reviews</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <!-- CUSTOMIZE: Add your license number -->
+            <li><a href="#contact">Get a Quote</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <!-- CUSTOMIZE: Your year, agency name, and license number -->
+        <p>© 2025 Your Agency Name. All rights reserved. Licensed Insurance Agent.</p>
+        <p style="color:var(--text-dim);font-size:0.75rem;">License #XXXXXXXX · [Your State]</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── MOBILE STICKY BAR ────────────────────────────────── -->
+  <div class="mobile-sticky-bar">
+    <!-- CUSTOMIZE: Your phone number -->
+    <a href="tel:YOUR-PHONE-NUMBER" class="call-btn">📞 Call Now</a>
+    <a href="#contact" class="quote-btn">Get My Free Quote →</a>
+  </div>
+
+  <script>
+    // ── Mobile menu ──────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.getElementById('mainNav');
+    hamburger?.addEventListener('click', () => nav.classList.toggle('menu-open'));
+    nav?.querySelectorAll('.nav-links a').forEach(a =>
+      a.addEventListener('click', () => nav.classList.remove('menu-open'))
+    );
+
+    // ── Scroll reveal ────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Quote form — CUSTOMIZE: connect to your GHL or email ─
+    document.getElementById('quoteForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Replace this with your actual form submission
+      // Option 1: GHL webhook URL
+      // Option 2: EmailJS
+      // Option 3: Formspree.io (free tier available)
+      alert('Thanks! We\'ll be in touch within 1 business day. ');
+    });
+  </script>
+
+</body>
+</html>

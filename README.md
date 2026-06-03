@@ -60,6 +60,8 @@ After setup, Claude can:
 | **Google Calendar** | Schedule calls, set reminders, check availability |
 | **Canva** | Create social posts, flyers, lead magnets |
 | **Site Builder** | Step-by-step guided workflow to build a complete site from scratch |
+| **Social Media** | Facebook & Instagram content — posts, carousels, 30-day calendars |
+| **Starter Template** | Working insurance agency website ready to customize and deploy |
 | **Website Design** | Build and redesign pages in plain English |
 | **FTP Deploy** | Push website changes live instantly |
 | **Kapture** | Screenshot any page, inspect elements, browser automation |
@@ -73,11 +75,13 @@ After setup, Claude can:
 |----------|----------|--------------|
 | [SETUP_GUIDE.md](onboarding/SETUP_GUIDE.md) | 🍎 Mac | Full step-by-step setup |
 | [SETUP_GUIDE_WINDOWS.md](onboarding/SETUP_GUIDE_WINDOWS.md) | 🪟 Windows | Full step-by-step setup |
+| [HOSTING_GUIDE.md](onboarding/HOSTING_GUIDE.md) | Both | Get hosting, find FTP credentials, deploy your site |
 | [QUICK_REFERENCE.md](onboarding/QUICK_REFERENCE.md) | Both | Daily cheat sheet — copy-paste prompts |
 | [TROUBLESHOOTING.md](onboarding/TROUBLESHOOTING.md) | 🍎 Mac | Fix common issues |
 | [TROUBLESHOOTING_WINDOWS.md](onboarding/TROUBLESHOOTING_WINDOWS.md) | 🪟 Windows | Fix common issues |
 | [verify.sh](onboarding/verify.sh) | 🍎 Mac | Check everything is working |
 | [verify.ps1](onboarding/verify.ps1) | 🪟 Windows | Check everything is working |
+| [starter-site/](starter-site/) | Both | Ready-to-customize insurance agency website template |
 
 ---
 
