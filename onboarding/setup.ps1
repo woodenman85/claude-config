@@ -115,6 +115,13 @@ if (-not $configJson.mcpServers) {
     $configJson | Add-Member -MemberType NoteProperty -Name "mcpServers" -Value ([PSCustomObject]@{})
 }
 
+# Kapture — best screenshot and browser inspection tool
+$kaptureServer = [PSCustomObject]@{
+    command = "npx"
+    args    = @("-y", "kapture-mcp@latest", "bridge")
+}
+$configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "kapture" -Value $kaptureServer -Force
+
 # GHL — direct CRM access
 $ghlServer = [PSCustomObject]@{
     command = "npx"
@@ -175,13 +182,34 @@ $devtoolsServer = [PSCustomObject]@{
 }
 $configJson.mcpServers | Add-Member -MemberType NoteProperty -Name "chrome-devtools" -Value $devtoolsServer -Force
 
-$installed = @("GHL", "Context7", "Fetch", "Playwright", "Chrome DevTools")
+$installed = @("Kapture", "GHL", "Context7", "Fetch", "Playwright", "Chrome DevTools")
 if ($MAGIC_KEY.Trim())     { $installed += "Magic" }
 if ($FIRECRAWL_KEY.Trim()) { $installed += "Firecrawl" }
 Write-Green ("MCPs installed: " + ($installed -join ", "))
 
 $configJson | ConvertTo-Json -Depth 10 | Set-Content -Path $DESKTOP_CONFIG -Encoding UTF8
 Write-Green "MCPs added to Claude desktop config"
+
+# ── Step 5b: Install agent-browser ───────────────────────
+Write-Step "Installing agent-browser..."
+try {
+    $agentBrowserDir = "$env:USERPROFILE\.local"
+    npm install -g agent-browser --prefix $agentBrowserDir 2>$null
+    $agentBrowserBin = "$agentBrowserDir\bin\agent-browser.cmd"
+    if (Test-Path $agentBrowserBin) {
+        $skillDir = "$env:USERPROFILE\.claude\skills\agent-browser"
+        New-Item -ItemType Directory -Force -Path $skillDir | Out-Null
+        & $agentBrowserBin skills get core 2>$null | Set-Content "$skillDir\SKILL.md" -Encoding UTF8
+        Write-Green "agent-browser installed"
+        # Add to PATH if not already there
+        $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+        if ($userPath -notlike "*$agentBrowserDir\bin*") {
+            [Environment]::SetEnvironmentVariable("Path", "$agentBrowserDir\bin;$userPath", "User")
+        }
+    }
+} catch {
+    Write-Yellow "agent-browser install skipped (optional — install manually later)"
+}
 
 # ── Step 6: Install skills ────────────────────────────────
 Write-Step "Installing skills..."

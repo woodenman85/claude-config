@@ -76,6 +76,57 @@ Draft a referral text to send to [Name] who is a happy client.
 
 ---
 
+## 🏗️ Build a Website From Scratch
+
+```
+Help me build my insurance agency website from scratch.
+My name is [Name], agency is [Agency Name] in [City, State].
+I sell [life insurance / mortgage protection / final expense].
+Phone: [number]. Email: [email]. Color preference: [colors].
+```
+
+**Build specific sections:**
+```
+Build a homepage hero section for my insurance agency in [City].
+Headline: "Life Insurance That Actually Fits."
+CTA: "Book My Free Call". Style: professional, clean, mobile-first.
+```
+
+```
+Build a services grid for: life insurance, mortgage protection, final expense, IUL.
+Clean cards with icons, one-sentence description, and Learn More button.
+```
+
+```
+Add a testimonials section with these reviews: [paste your Google reviews]
+Clean cards, star rating, first name only.
+```
+
+**Review and fix:**
+```
+Take a screenshot of my homepage. Tell me the weakest part visually,
+whether the CTA is clear, and how it looks on mobile.
+```
+
+```
+Screenshot my site at 390px width. Fix anything broken or hard to read on mobile.
+```
+
+**Test it works:**
+```
+Open my website and fill out the contact form as a test lead.
+Tell me if it submits correctly and what the confirmation looks like.
+```
+
+**Deploy:**
+```
+Deploy [filename] to my Hostinger site via FTP.
+Host: [host]. Username: [user]. Password: [password].
+Path: /domains/[yourdomain.com]/public_html/
+```
+
+---
+
 ## 🎨 Website & Design
 
 ```

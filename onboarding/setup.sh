@@ -119,6 +119,12 @@ with open(config_path) as f:
 
 servers = config.setdefault("mcpServers", {})
 
+# Kapture — best screenshot and browser inspection tool
+servers["kapture"] = {
+    "command": "npx",
+    "args": ["-y", "kapture-mcp@latest", "bridge"]
+}
+
 # GHL — direct CRM access
 servers["ghl"] = {
     "command": "npx",
@@ -172,7 +178,7 @@ servers["chrome-devtools"] = {
     "args": ["-y", "chrome-devtools-mcp"]
 }
 
-installed = ["GHL", "Context7", "Fetch", "Playwright", "Chrome DevTools"]
+installed = ["Kapture", "GHL", "Context7", "Fetch", "Playwright", "Chrome DevTools"]
 if magic_key: installed.append("Magic")
 if firecrawl_key: installed.append("Firecrawl")
 print("✓ MCPs installed: " + ", ".join(installed))
@@ -182,6 +188,19 @@ with open(config_path, "w") as f:
 PYEOF
 
 echo -e "${GREEN}✓ MCPs added to Claude desktop config${NC}"
+
+# ── Step 5b: Install agent-browser ───────────────────────
+echo -e "${YELLOW}Installing agent-browser...${NC}"
+npm install -g agent-browser --prefix ~/.local 2>/dev/null && \
+  mkdir -p ~/.claude/skills/agent-browser && \
+  ~/.local/bin/agent-browser skills get core > ~/.claude/skills/agent-browser/SKILL.md 2>/dev/null && \
+  echo -e "${GREEN}✓ agent-browser installed${NC}" || \
+  echo -e "${YELLOW}⚠ agent-browser install skipped (optional — install manually later)${NC}"
+
+# Ensure ~/.local/bin is in PATH
+if ! grep -q 'export PATH.*\.local/bin' ~/.zshrc 2>/dev/null; then
+  echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+fi
 
 # ── Step 6: Install skills ────────────────────────────────
 echo -e "${YELLOW}Installing skills...${NC}"
@@ -738,7 +757,106 @@ Check Performance → Queries to see what search terms bring people to your site
 - "I'm getting 500 visitors/month but zero leads — what's wrong?"
 SKILLEOF
 
-echo -e "${GREEN}✓ Skills installed (ghl, design, website, daily-briefing, lead-nurture, compliance, sms, seo, cro, web-copy, analytics)${NC}"
+mkdir -p ~/.claude/skills/site-builder
+cat > ~/.claude/skills/site-builder/SKILL.md << 'SKILLEOF'
+---
+name: site-builder
+description: Step-by-step guided workflow for building a complete insurance agency website from scratch. Use when someone says "build my website", "help me make a site", "I need a new website", or "redesign my site". Walks through every phase in plain English — no coding knowledge required.
+---
+
+# Site Builder — Complete Website Workflow
+
+You don't need to know how to code. Just answer the questions and Claude handles the rest.
+
+## Phase 1 — Start here
+Tell Claude:
+- Your name, agency name, and city/state
+- Products you offer (life, mortgage, final expense, IUL, annuities)
+- Your phone number and email
+- Color preference or vibe (professional navy, warm and friendly, clean modern)
+- Whether you have a headshot photo ready
+
+Starter prompt:
+"Help me build my insurance agency website from scratch.
+My name is [Name], agency is [Agency] in [City, State].
+I sell [products]. Phone: [number]. Email: [email].
+Color preference: [colors]."
+
+## Phase 2 — Pages to build
+
+Start with just two:
+1. Homepage — who you are, what you do, CTA to book a call
+2. Contact page — form, phone, email, your photo
+
+Add later: Life Insurance page, About page, Services overview, individual product pages
+
+## Phase 3 — Build each section
+
+Hero section:
+"Build a homepage hero section. Agency: [name]. City: [city].
+Headline: [headline]. CTA button: Book My Free Call.
+Style: professional, clean, trust-building, mobile-first. Colors: [colors]."
+
+Services grid:
+"Build a services section with cards for: [list products].
+Each card: icon, name, one-sentence description, Learn More button."
+
+Trust section:
+"Build a Why Choose Us section with 3 points: [your points].
+My photo on the left, text on the right."
+
+Contact/CTA:
+"Build a full-width CTA at the bottom. Headline: Ready to Protect Your Family?
+Button: Book My Free Call. Also show phone and email as secondary options."
+
+## Phase 4 — Review
+
+Screenshot and fix:
+"Take a screenshot of my homepage. Tell me the weakest part,
+whether the CTA is clear, and how it looks on mobile."
+
+Test the form:
+"Open my site and fill out the contact form as a test lead.
+Tell me if it submits correctly."
+
+Mobile check:
+"Screenshot my homepage at 390px width. Is anything broken or hard to read?"
+
+## Phase 5 — SEO and analytics
+
+"Write SEO title tags and meta descriptions for every page.
+Agency: [name]. City: [city]. Products: [list]."
+
+"Add InsuranceAgency schema markup to my homepage."
+
+"Add Google Analytics 4 to my site. My ID is G-XXXXXXXXXX.
+Also add phone click tracking."
+
+## Phase 6 — Deploy
+
+"Deploy [filename] to my Hostinger site via FTP.
+Host: [host]. User: [user]. Password: [password].
+Path: /domains/[domain]/public_html/"
+
+## Quick fixes
+
+Make it look more professional:
+"Screenshot my homepage and redesign the hero to look more professional.
+Keep the content but improve typography, spacing, and visual hierarchy."
+
+Fix mobile:
+"Screenshot at 390px. Fix anything broken, hard to read, or hard to tap."
+
+Add testimonials:
+"Add a testimonials section with these reviews: [paste reviews].
+Clean cards, star rating, first name only."
+
+Landing page for ads:
+"Build a landing page for Facebook ads about [product] in [city].
+No navigation. Single focus. Form: name, phone, email only. Mobile-first."
+SKILLEOF
+
+echo -e "${GREEN}✓ Skills installed (ghl, design, website, site-builder, daily-briefing, lead-nurture, compliance, sms, seo, cro, web-copy, analytics)${NC}"
 
 # ── Step 7: Git identity ──────────────────────────────────
 echo ""

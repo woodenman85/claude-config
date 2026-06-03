@@ -59,8 +59,11 @@ After setup, Claude can:
 | **Gmail** | Search inbox, draft follow-up emails, write sequences |
 | **Google Calendar** | Schedule calls, set reminders, check availability |
 | **Canva** | Create social posts, flyers, lead magnets |
+| **Site Builder** | Step-by-step guided workflow to build a complete site from scratch |
 | **Website Design** | Build and redesign pages in plain English |
 | **FTP Deploy** | Push website changes live instantly |
+| **Kapture** | Screenshot any page, inspect elements, browser automation |
+| **agent-browser** | Navigate, click, fill forms, and test pages in a real browser |
 
 ---
 
